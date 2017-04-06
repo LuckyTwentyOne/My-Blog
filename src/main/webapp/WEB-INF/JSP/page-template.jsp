@@ -21,7 +21,7 @@
 						<h1>Blog name</h1>
 					</div>
 					<div class="large-6 medium-6 columns">
-						<form action="#" method="get">
+						<form action="/MyBlog/search" method="get">
 							<div class="input-group" style="margin-top: 1em;">
 								<input id="search" class="input-group-field" name="query" placeholder="Search query" type="text">
 								<div class="input-group-button">
@@ -45,25 +45,25 @@
 				        <a href="javascript:void(0);">Categories</a>
 				        <ul class="menu" style="display:none;">
 							<li>
-				            	<a href="index.html">Elementum<span>(1)</span></a>
+				            	<a href="/MyBlog/news">Elementum<span>(1)</span></a>
 				            </li>  
 				            <li>
-				            	<a href="index.html">Proin<span>(2)</span></a>
+				            	<a href="/MyBlog/news">Proin<span>(2)</span></a>
 				            </li>  
 				            <li>
-				            	<a href="index.html">Eleifend<span>(18)</span></a>
+				            	<a href="/MyBlog/news">Eleifend<span>(18)</span></a>
 				            </li>  
 				            <li>
-				            	<a href="index.html">Phasellus<span>(24)</span></a>
+				            	<a href="/MyBlog/news">Phasellus<span>(24)</span></a>
 				            </li>  
 				            <li>
-				            	<a href="index.html">Consectetuer<span>(33)</span></a>
+				            	<a href="/MyBlog/news">Consectetuer<span>(33)</span></a>
 				            </li>  
 				            <li>
-				            	<a href="index.html">Ultricies<span>(2)</span></a>
+				            	<a href="/MyBlog/news">Ultricies<span>(2)</span></a>
 				            </li>  
 				            <li>
-				            	<a href="index.html">Mollis<span>(1)</span></a>
+				            	<a href="/MyBlog/news">Mollis<span>(1)</span></a>
 				            </li>  
 				        </ul>
 			        </li>
@@ -83,37 +83,37 @@
 							</tr>
 							<tr>
 								<td>
-									<a href="index.html">Elementum<span>(1)</span></a>
+									<a href="/MyBlog/news">Elementum<span>(1)</span></a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href="index.html">Proin<span>(2)</span></a>
+									<a href="/MyBlog/news">Proin<span>(2)</span></a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href="index.html">Eleifend<span>(18)</span></a>
+									<a href="/MyBlog/news">Eleifend<span>(18)</span></a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href="index.html">Phasellus<span>(24)</span></a>
+									<a href="/MyBlog/news">Phasellus<span>(24)</span></a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href="index.html">Consectetuer<span>(33)</span></a>
+									<a href="/MyBlog/news">Consectetuer<span>(33)</span></a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href="index.html">Ultricies<span>(2)</span></a>
+									<a href="/MyBlog/news">Ultricies<span>(2)</span></a>
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<a href="index.html">Mollis<span>(1)</span></a>
+									<a href="/MyBlog/news">Mollis<span>(1)</span></a>
 								</td>
 							</tr>
 	              		</tbody>
@@ -126,10 +126,10 @@
 				<div class="small-12 medium-6 large-5 columns">
 					<p class="logo"><i class="fi-shield"></i>PERSONAL BLOG</p>
 					<p class="footer-links">
-						<a href="#">News</a> 
+						<a href="/MyBlog/news">News</a> 
 						<a href="#">Search</a> 
-						<a href="about.html">About</a> 
-						<a href="contact.html">Contact</a>
+						<a href="/MyBlog/about">About</a> 
+						<a href="/MyBlog/contact">Contact</a>
 					</p>
 					<p class="copywrite">Copywrite not copywrite © 2015</p>
 				</div>
