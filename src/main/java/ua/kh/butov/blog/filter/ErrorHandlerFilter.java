@@ -21,7 +21,7 @@ public class ErrorHandlerFilter extends AbstractFilter {
 			if (requestUrl.startsWith("/MyBlog/ajax/")) {
 				resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			} else if (!requestUrl.startsWith("/MyBlog/error")) {
-				resp.sendRedirect("/error");
+				resp.sendRedirect("/MyBlog/error");
 			} else {
 				throw new ServletException(th);
 			}
