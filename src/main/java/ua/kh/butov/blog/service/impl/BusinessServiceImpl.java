@@ -7,8 +7,10 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import ua.kh.butov.blog.dao.SQLDAO;
+import ua.kh.butov.blog.entity.Article;
 import ua.kh.butov.blog.entity.Category;
 import ua.kh.butov.blog.exception.ApplicationException;
+import ua.kh.butov.blog.model.Items;
 import ua.kh.butov.blog.service.BusinessService;
 
 public class BusinessServiceImpl implements BusinessService {
@@ -25,6 +27,18 @@ public class BusinessServiceImpl implements BusinessService {
 	public Map<Integer, Category> mapCategories() {
 		try (Connection c = dataSource.getConnection()) {
 			return sql.mapCategories(c);
+		} catch (SQLException e) {
+			throw new ApplicationException("Can't execute db command: " + e.getMessage(), e);
+		}
+	}
+	
+	@Override
+	public Items<Article> listArticles(int offset, int limit) {
+		try (Connection c = dataSource.getConnection()) {
+			Items<Article> items = new Items<>();
+			items.setItems(sql.listArticles(c, offset, limit));
+			items.setCount(sql.countArticles(c));
+			return items;
 		} catch (SQLException e) {
 			throw new ApplicationException("Can't execute db command: " + e.getMessage(), e);
 		}
