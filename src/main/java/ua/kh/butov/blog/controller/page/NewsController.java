@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import ua.kh.butov.blog.Constants;
 import ua.kh.butov.blog.controller.AbstractController;
 import ua.kh.butov.blog.entity.Article;
+import ua.kh.butov.blog.entity.Category;
 import ua.kh.butov.blog.model.Items;
 
 @WebServlet({"/news","/news/*"})
@@ -24,7 +25,10 @@ public class NewsController extends AbstractController {
 			items = getBusinessService().listArticles(0, Constants.LIMIT_ARTICLES_PER_PAGE);
 		}
 		else{
-			//TODO display articles for category
+			String categoryUrl = requestUrl.replace("/MyBlog/news", "");
+			items = getBusinessService().listArticlesByCategory(categoryUrl, 0, Constants.LIMIT_ARTICLES_PER_PAGE);
+			Category category = getBusinessService().findCategoryByUrl(categoryUrl);
+			req.setAttribute("selectedCategory", category);
 		}
 		req.setAttribute("list", items.getItems());
 		forwardToPage("news.jsp", req, resp);
