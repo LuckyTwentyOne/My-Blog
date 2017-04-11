@@ -46,7 +46,7 @@ public class ServiceManager {
 	private ServiceManager(ServletContext context) {
 		AppUtil.loadProperties(applicationProperties, "application.properties");
 		dataSource = createBasicDataSource();
-		businessService = new BusinessServiceImpl();
+		businessService = new BusinessServiceImpl(this);
 		LOGGER.info("ServiceManager instance created");
 	}
 	

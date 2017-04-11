@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import ua.kh.butov.blog.model.AbstractModel;
 
-public class AbstractEntity<PK> extends AbstractModel implements Serializable {
+public abstract class AbstractEntity<PK> extends AbstractModel implements Serializable {
 	private static final long serialVersionUID = 6750816442772298113L;
 	private PK id;
 	public PK getId() {
