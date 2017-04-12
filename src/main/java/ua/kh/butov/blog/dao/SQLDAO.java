@@ -42,4 +42,16 @@ public final class SQLDAO {
 	public Category findCategoryByUrl(Connection c, String categoryUrl) throws SQLException {
 		return sql.query(c, "select * from category c where c.url = ?", new BeanHandler<>(Category.class), categoryUrl);
 	}
+	
+	public List<Article> listArticlesBySearchQuery(Connection c, String searchQuery, int offset, int limit) throws SQLException {
+		String q = "%" + searchQuery + "%";
+		return sql.query(c, "select * from article a where (a.title ilike ? or a.content ilike ?) order by a.id desc limit ? offset ?", 
+				new ListMapper<>(new ArticleMapper()), q, q, limit, offset);
+	}
+	
+	public int countArticlesBySearchQuery(Connection c, String searchQuery) throws SQLException {
+		String q = "%" + searchQuery + "%";
+		return new QueryRunner().query(c, "select count(a.id) from article a where (a.title ilike ? or a.content ilike ?)", 
+				new ScalarHandler<Number>(), q, q).intValue();
+	}
 }
