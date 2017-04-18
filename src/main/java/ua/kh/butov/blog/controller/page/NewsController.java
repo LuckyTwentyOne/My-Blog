@@ -12,6 +12,7 @@ import ua.kh.butov.blog.controller.AbstractController;
 import ua.kh.butov.blog.entity.Article;
 import ua.kh.butov.blog.entity.Category;
 import ua.kh.butov.blog.model.Items;
+import ua.kh.butov.blog.model.Pagination;
 
 @WebServlet({"/news","/news/*"})
 public class NewsController extends AbstractController {
@@ -19,18 +20,21 @@ public class NewsController extends AbstractController {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		int offset = getOffset(req, Constants.LIMIT_ARTICLES_PER_PAGE);
 		String requestUrl = req.getRequestURI();
 		Items<Article> items = null;
 		if(requestUrl.endsWith("/MyBlog/news") || requestUrl.endsWith("/MyBlog/news/")){
-			items = getBusinessService().listArticles(0, Constants.LIMIT_ARTICLES_PER_PAGE);
+			items = getBusinessService().listArticles(offset, Constants.LIMIT_ARTICLES_PER_PAGE);
 		}
 		else{
 			String categoryUrl = requestUrl.replace("/MyBlog/news", "");
-			items = getBusinessService().listArticlesByCategory(categoryUrl, 0, Constants.LIMIT_ARTICLES_PER_PAGE);
+			items = getBusinessService().listArticlesByCategory(categoryUrl, offset, Constants.LIMIT_ARTICLES_PER_PAGE);
 			Category category = getBusinessService().findCategoryByUrl(categoryUrl);
 			req.setAttribute("selectedCategory", category);
 		}
 		req.setAttribute("list", items.getItems());
+		Pagination pagination = new Pagination.Builder(requestUrl+"?", offset, items.getCount()).withLimit(Constants.LIMIT_ARTICLES_PER_PAGE).build();
+		req.setAttribute("pagination", pagination);
 		forwardToPage("news.jsp", req, resp);
 	}
 }
