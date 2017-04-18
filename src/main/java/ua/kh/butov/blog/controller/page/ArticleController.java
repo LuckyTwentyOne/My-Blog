@@ -7,14 +7,33 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ua.kh.butov.blog.controller.AbstractController;
+import org.apache.commons.lang.StringUtils;
 
-@WebServlet("/article")
+import ua.kh.butov.blog.controller.AbstractController;
+import ua.kh.butov.blog.entity.Article;
+import ua.kh.butov.blog.exception.RedirectToValidUrlException;
+
+@WebServlet("/article/*")
 public class ArticleController extends AbstractController {
 	private static final long serialVersionUID = 7089871282763553056L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		forwardToPage("article.jsp", req, resp);
+		try {
+			String requestUrl = req.getRequestURI();
+			String id = StringUtils.split(requestUrl, "/")[2];
+			Article article = getBusinessService().viewArticle(Long.parseLong(id), requestUrl);
+			if (article == null) {
+				resp.sendRedirect("/MyBlog/404?url="+requestUrl);
+			}
+			else{
+				req.setAttribute("article", article);
+				forwardToPage("article.jsp", req, resp);
+			}
+		}  catch (RedirectToValidUrlException e) {
+			resp.sendRedirect(e.getUrl());
+		}  catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+			resp.sendRedirect("/MyBlog/news");
+		}
 	}
 }

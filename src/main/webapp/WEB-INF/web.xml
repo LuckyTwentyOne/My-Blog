@@ -9,7 +9,7 @@
 	</session-config>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/error</location>
+		<location>/404</location>
 	</error-page>
 
 </web-app>

@@ -21,37 +21,53 @@ public final class SQLDAO {
 	public Map<Integer, Category> mapCategories(Connection c) throws SQLException {
 		return sql.query(c, "select * from category", new MapCategoryMapper());
 	}
-	
+
 	public List<Article> listArticles(Connection c, int offset, int limit) throws SQLException {
-		return sql.query(c, "select * from article a order by a.id desc limit ? offset ?", new ListMapper<>(new ArticleMapper()), limit, offset);
+		return sql.query(c, "select * from article a order by a.id desc limit ? offset ?",
+				new ListMapper<>(new ArticleMapper()), limit, offset);
 	}
-	
+
 	public int countArticles(Connection c) throws SQLException {
 		return sql.query(c, "select count(*) from article a", new ScalarHandler<Number>()).intValue();
 	}
-	
-	public List<Article> listArticlesByCategory(Connection c, String categoryUrl, int offset, int limit) throws SQLException {
-		return sql.query(c, "select a.* from article a, category c where c.id=a.id_category and c.url=? order by a.id desc limit ? offset ?", 
+
+	public List<Article> listArticlesByCategory(Connection c, String categoryUrl, int offset, int limit)
+			throws SQLException {
+		return sql.query(c,
+				"select a.* from article a, category c where c.id=a.id_category and c.url=? order by a.id desc limit ? offset ?",
 				new ListMapper<>(new ArticleMapper()), categoryUrl, limit, offset);
 	}
-	
+
 	public int countArticlesByCategory(Connection c, String categoryUrl) throws SQLException {
-		return sql.query(c, "select count(a.id) from article a, category c where a.id_category=c.id and c.url=?", new ScalarHandler<Number>(), categoryUrl).intValue();
+		return sql.query(c, "select count(a.id) from article a, category c where a.id_category=c.id and c.url=?",
+				new ScalarHandler<Number>(), categoryUrl).intValue();
 	}
-	
+
 	public Category findCategoryByUrl(Connection c, String categoryUrl) throws SQLException {
 		return sql.query(c, "select * from category c where c.url = ?", new BeanHandler<>(Category.class), categoryUrl);
 	}
-	
-	public List<Article> listArticlesBySearchQuery(Connection c, String searchQuery, int offset, int limit) throws SQLException {
+
+	public List<Article> listArticlesBySearchQuery(Connection c, String searchQuery, int offset, int limit)
+			throws SQLException {
 		String q = "%" + searchQuery + "%";
-		return sql.query(c, "select * from article a where (a.title ilike ? or a.content ilike ?) order by a.id desc limit ? offset ?", 
+		return sql.query(c,
+				"select * from article a where (a.title ilike ? or a.content ilike ?) order by a.id desc limit ? offset ?",
 				new ListMapper<>(new ArticleMapper()), q, q, limit, offset);
 	}
-	
+
 	public int countArticlesBySearchQuery(Connection c, String searchQuery) throws SQLException {
 		String q = "%" + searchQuery + "%";
-		return new QueryRunner().query(c, "select count(a.id) from article a where (a.title ilike ? or a.content ilike ?)", 
-				new ScalarHandler<Number>(), q, q).intValue();
+		return new QueryRunner()
+				.query(c, "select count(a.id) from article a where (a.title ilike ? or a.content ilike ?)",
+						new ScalarHandler<Number>(), q, q)
+				.intValue();
+	}
+
+	public Article findArticleById(Connection c, long idArticle) throws SQLException {
+		return sql.query(c, "select * from article a where a.id = ?", new ArticleMapper(), idArticle);
+	}
+
+	public void updateArticleViews(Connection c, Article article) throws SQLException {
+		sql.update(c, "update article set views=? where id=?", article.getViews(), article.getId());
 	}
 }

@@ -10,6 +10,7 @@ import ua.kh.butov.blog.dao.SQLDAO;
 import ua.kh.butov.blog.entity.Article;
 import ua.kh.butov.blog.entity.Category;
 import ua.kh.butov.blog.exception.ApplicationException;
+import ua.kh.butov.blog.exception.RedirectToValidUrlException;
 import ua.kh.butov.blog.model.Items;
 import ua.kh.butov.blog.service.BusinessService;
 
@@ -72,6 +73,26 @@ public class BusinessServiceImpl implements BusinessService {
 			items.setItems(sql.listArticlesBySearchQuery(c, searchQuery, offset, limit));
 			items.setCount(sql.countArticlesBySearchQuery(c, searchQuery));
 			return items;
+		} catch (SQLException e) {
+			throw new ApplicationException("Can't execute db command: " + e.getMessage(), e);
+		}
+	}
+	
+	@Override
+	public Article viewArticle(Long idArticle, String requestUrl) throws RedirectToValidUrlException {
+		try (Connection c = dataSource.getConnection()) {
+			Article article = sql.findArticleById(c, idArticle);
+			if (article == null) {
+				return null;
+			}
+			if (!article.getArticleLink().equals(requestUrl)) {
+				throw new RedirectToValidUrlException(article.getArticleLink());
+			} else {
+				article.setViews(article.getViews() + 1);
+				sql.updateArticleViews(c, article);
+				c.commit();
+				return article;
+			}
 		} catch (SQLException e) {
 			throw new ApplicationException("Can't execute db command: " + e.getMessage(), e);
 		}
