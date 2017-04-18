@@ -36,9 +36,9 @@
 				<p class="about subheader">A blog is a discussion or informational site published on the World Wide Web consisting of discrete
 					entries ("posts") typically displayed in reverse chronological order.</p>
 				<ul class="inline-list social no-bullet">
-					<li><a href="https://www.facebook.com/vjacheslav.butov"><i class="fi-social-facebook"></i></a></li>
-					<li><a href="https://www.linkedin.com/in/viacheslav-butov-309182124"><i class="fi-social-linkedin"></i></a></li>
-					<li><a href="https://github.com/LuckyTwentyOne"><i class="fi-social-github"></i></a></li>
+					<li><a href="https://www.facebook.com/vjacheslav.butov" target="_blank"><i class="fi-social-facebook"></i></a></li>
+					<li><a href="https://www.linkedin.com/in/viacheslav-butov-309182124" target="_blank"><i class="fi-social-linkedin"></i></a></li>
+					<li><a href="https://github.com/LuckyTwentyOne" target="_blank"><i class="fi-social-github"></i></a></li>
 				</ul>
 			</div>
 		</div>
