@@ -25,11 +25,16 @@ public class NewsController extends AbstractController {
 		Items<Article> items = null;
 		if(requestUrl.endsWith("/MyBlog/news") || requestUrl.endsWith("/MyBlog/news/")){
 			items = getBusinessService().listArticles(offset, Constants.LIMIT_ARTICLES_PER_PAGE);
+			req.setAttribute("isNewsPage", Boolean.TRUE);
 		}
 		else{
 			String categoryUrl = requestUrl.replace("/MyBlog/news", "");
-			items = getBusinessService().listArticlesByCategory(categoryUrl, offset, Constants.LIMIT_ARTICLES_PER_PAGE);
 			Category category = getBusinessService().findCategoryByUrl(categoryUrl);
+			if (category == null) {
+				resp.sendRedirect("/404?url="+requestUrl);
+				return;
+			}
+			items = getBusinessService().listArticlesByCategory(categoryUrl, offset, Constants.LIMIT_ARTICLES_PER_PAGE);
 			req.setAttribute("selectedCategory", category);
 		}
 		req.setAttribute("list", items.getItems());
