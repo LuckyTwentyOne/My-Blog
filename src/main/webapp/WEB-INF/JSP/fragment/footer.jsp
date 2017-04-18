@@ -10,23 +10,23 @@
 					<a href="/MyBlog/about">About</a> 
 					<a href="/MyBlog/contact">Contact</a>
 				</p>
-				<p class="copywrite">Copywrite not copywrite © 2015</p>
+				<p class="copywrite">Copywrite not copywrite © 2017</p>
 			</div>
 			<div class="small-12 medium-6 large-4 columns">
 				<ul class="contact">
 					<li>
 						<p>
-							<i class="fi-marker"></i>1234 Spring Street New York, CT 00001
+							<i class="fi-marker"></i>Ukraine, Kharkiv
 						</p>
 					</li>
 					<li>
 						<p>
-							<i class="fi-telephone"></i><a href="tel:12223334444">+1-222-333-4444</a>
+							<i class="fi-telephone"></i><a href="tel:12223334444">+380504402216</a>
 						</p>
 					</li>
 					<li>
 						<p>
-							<i class="fi-mail"></i><a href="mailto:contact@example.com">contact@example.com</a>
+							<i class="fi-mail"></i><a href="mailto:contact@example.com">vbutov91@gmail.com</a>
 						</p>
 					</li>
 				</ul>
@@ -36,10 +36,9 @@
 				<p class="about subheader">A blog is a discussion or informational site published on the World Wide Web consisting of discrete
 					entries ("posts") typically displayed in reverse chronological order.</p>
 				<ul class="inline-list social no-bullet">
-					<li><a href="#"><i class="fi-social-facebook"></i></a></li>
-					<li><a href="#"><i class="fi-social-twitter"></i></a></li>
-					<li><a href="#"><i class="fi-social-linkedin"></i></a></li>
-					<li><a href="#"><i class="fi-social-github"></i></a></li>
+					<li><a href="https://www.facebook.com/vjacheslav.butov"><i class="fi-social-facebook"></i></a></li>
+					<li><a href="https://www.linkedin.com/in/viacheslav-butov-309182124"><i class="fi-social-linkedin"></i></a></li>
+					<li><a href="https://github.com/LuckyTwentyOne"><i class="fi-social-github"></i></a></li>
 				</ul>
 			</div>
 		</div>
