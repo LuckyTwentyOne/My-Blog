@@ -1,6 +1,7 @@
 package ua.kh.butov.blog.controller.page;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,8 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.StringUtils;
 
+import ua.kh.butov.blog.Constants;
 import ua.kh.butov.blog.controller.AbstractController;
 import ua.kh.butov.blog.entity.Article;
+import ua.kh.butov.blog.entity.Comment;
 import ua.kh.butov.blog.exception.RedirectToValidUrlException;
 
 @WebServlet("/article/*")
@@ -28,6 +31,8 @@ public class ArticleController extends AbstractController {
 			}
 			else{
 				req.setAttribute("article", article);
+				List<Comment> comments = getBusinessService().listComments(article.getId(), 0, Constants.LIMIT_COMMENTS_PER_PAGE);
+				req.setAttribute("comments", comments);
 				forwardToPage("article.jsp", req, resp);
 			}
 		} catch (RedirectToValidUrlException e) {
