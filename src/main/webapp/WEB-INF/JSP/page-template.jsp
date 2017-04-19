@@ -40,6 +40,7 @@
 	<script src="/MyBlog/static/js/jquery.js"></script>
 	<script src="/MyBlog/static/js/what-input.js"></script>
 	<script src="/MyBlog/static/js/foundation.js"></script>
+	<script src="/MyBlog/static/js/messages.jsp"></script>
 	<script src="/MyBlog/static/js/app.js"></script>
 </body>
 </html>
