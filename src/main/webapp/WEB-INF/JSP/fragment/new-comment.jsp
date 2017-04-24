@@ -11,6 +11,10 @@
 	</div>
 </div>
 
+<div id="new-comment-loading" class="row column text-center">
+	<img src="/MyBlog/static/img/loading.gif" alt="Loading..." class="loading-indicator" style="margin:12px auto;"/>
+</div>
+
 <div class="reveal" id="sigin-form" data-reveal>
 	<h4>You should login before leaving messages</h4>
     <div class="row">
