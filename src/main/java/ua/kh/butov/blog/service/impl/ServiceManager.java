@@ -41,9 +41,11 @@ public class ServiceManager {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ServiceManager.class);
 	
 	final Properties applicationProperties = new Properties();
+	final ServletContext applicationContext;
 	final BasicDataSource dataSource;
 	final BusinessService businessService;
 	private ServiceManager(ServletContext context) {
+		applicationContext = context;
 		AppUtil.loadProperties(applicationProperties, "application.properties");
 		dataSource = createBasicDataSource();
 		businessService = new BusinessServiceImpl(this);
