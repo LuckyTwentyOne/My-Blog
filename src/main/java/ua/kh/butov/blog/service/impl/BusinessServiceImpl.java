@@ -18,11 +18,13 @@ import ua.kh.butov.blog.entity.Category;
 import ua.kh.butov.blog.entity.Comment;
 import ua.kh.butov.blog.exception.ApplicationException;
 import ua.kh.butov.blog.exception.RedirectToValidUrlException;
+import ua.kh.butov.blog.exception.ValidateException;
 import ua.kh.butov.blog.form.CommentForm;
 import ua.kh.butov.blog.model.Items;
 import ua.kh.butov.blog.model.SocialAccount;
 import ua.kh.butov.blog.service.AvatarService;
 import ua.kh.butov.blog.service.BusinessService;
+import ua.kh.butov.blog.service.I18nService;
 import ua.kh.butov.blog.service.SocialService;
 
 public class BusinessServiceImpl implements BusinessService {
@@ -31,11 +33,13 @@ public class BusinessServiceImpl implements BusinessService {
 	private final SQLDAO sql;
 	private final SocialService socialService;
 	private final AvatarService avatarService;
+	private final I18nService i18nService;
 
 	BusinessServiceImpl(ServiceManager serviceManager) {
 		this.dataSource = serviceManager.dataSource;
 		this.socialService = serviceManager.socialService;
 		this.avatarService = serviceManager.avatarService;
+		this.i18nService = serviceManager.i18nService;
 		this.sql = new SQLDAO();
 	}
 
@@ -92,7 +96,7 @@ public class BusinessServiceImpl implements BusinessService {
 			throw new ApplicationException("Can't execute db command: " + e.getMessage(), e);
 		}
 	}
-	
+
 	@Override
 	public Article viewArticle(Long idArticle, String requestUrl) throws RedirectToValidUrlException {
 		try (Connection c = dataSource.getConnection()) {
@@ -121,9 +125,10 @@ public class BusinessServiceImpl implements BusinessService {
 			throw new ApplicationException("Can't execute db command: " + e.getMessage(), e);
 		}
 	}
-	
+
 	@Override
-	public Comment createComment(CommentForm form) {
+	public Comment createComment(CommentForm form) throws ValidateException {
+		form.validate(i18nService);
 		String newAvatarPath = null;
 		try (Connection c = dataSource.getConnection()) {
 			SocialAccount socialAccount = socialService.getSocialAccount(form.getAuthToken());
@@ -139,11 +144,11 @@ public class BusinessServiceImpl implements BusinessService {
 			sql.updateArticleComments(c, article);
 			c.commit();
 			// after commit
-			//TODO Send new comment notification
+			// TODO Send new comment notification
 			return comment;
 		} catch (SQLException | RuntimeException | IOException e) {
-			if(avatarService.deleteAvatarIfExists(newAvatarPath)){
-				LOGGER.info("Avatar "+newAvatarPath+" deleted");
+			if (avatarService.deleteAvatarIfExists(newAvatarPath)) {
+				LOGGER.info("Avatar " + newAvatarPath + " deleted");
 			}
 			throw new ApplicationException("Can't create new comment: " + e.getMessage(), e);
 		}

@@ -7,6 +7,7 @@ import ua.kh.butov.blog.entity.Article;
 import ua.kh.butov.blog.entity.Category;
 import ua.kh.butov.blog.entity.Comment;
 import ua.kh.butov.blog.exception.RedirectToValidUrlException;
+import ua.kh.butov.blog.exception.ValidateException;
 import ua.kh.butov.blog.form.CommentForm;
 import ua.kh.butov.blog.model.Items;
 
@@ -32,5 +33,5 @@ public interface BusinessService {
 
 	List<Comment> listComments(long idArticle, int offset, int limit);
 	
-	Comment createComment(CommentForm form);
+	Comment createComment(CommentForm form) throws ValidateException;
 }
