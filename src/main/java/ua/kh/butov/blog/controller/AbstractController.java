@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ua.kh.butov.blog.form.AbstractForm;
 import ua.kh.butov.blog.service.BusinessService;
 import ua.kh.butov.blog.service.impl.ServiceManager;
 
@@ -50,9 +51,10 @@ public abstract class AbstractController extends HttpServlet {
 		}
 	}
 	
-	public final <T> T createForm(HttpServletRequest req, Class<T> formClass) throws ServletException {
+	public final <T extends AbstractForm> T createForm(HttpServletRequest req, Class<T> formClass) throws ServletException {
 		try {
 			T form = formClass.newInstance();
+			form.setLocale(req.getLocale());
 			BeanUtils.populate(form, req.getParameterMap());
 			return form;
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {

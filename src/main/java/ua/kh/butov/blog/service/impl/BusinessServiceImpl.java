@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.sql.DataSource;
@@ -25,6 +26,7 @@ import ua.kh.butov.blog.model.SocialAccount;
 import ua.kh.butov.blog.service.AvatarService;
 import ua.kh.butov.blog.service.BusinessService;
 import ua.kh.butov.blog.service.I18nService;
+import ua.kh.butov.blog.service.NotificationService;
 import ua.kh.butov.blog.service.SocialService;
 
 public class BusinessServiceImpl implements BusinessService {
@@ -34,12 +36,16 @@ public class BusinessServiceImpl implements BusinessService {
 	private final SocialService socialService;
 	private final AvatarService avatarService;
 	private final I18nService i18nService;
+	private final NotificationService notificationService;
+	private final String appHost;
 
 	BusinessServiceImpl(ServiceManager serviceManager) {
 		this.dataSource = serviceManager.dataSource;
 		this.socialService = serviceManager.socialService;
 		this.avatarService = serviceManager.avatarService;
 		this.i18nService = serviceManager.i18nService;
+		this.notificationService = serviceManager.notificationService;
+		this.appHost = serviceManager.getApplicationProperty("app.host");
 		this.sql = new SQLDAO();
 	}
 
@@ -144,7 +150,7 @@ public class BusinessServiceImpl implements BusinessService {
 			sql.updateArticleComments(c, article);
 			c.commit();
 			// after commit
-			// TODO Send new comment notification
+			sendNewCommentNotification(article, form.getContent(), form.getLocale());
 			return comment;
 		} catch (SQLException | RuntimeException | IOException e) {
 			if (avatarService.deleteAvatarIfExists(newAvatarPath)) {
@@ -152,5 +158,12 @@ public class BusinessServiceImpl implements BusinessService {
 			}
 			throw new ApplicationException("Can't create new comment: " + e.getMessage(), e);
 		}
+	}
+	
+	private void sendNewCommentNotification(Article article, String commentContent, Locale locale) {
+		String fullLink = appHost + article.getArticleLink();
+		String title = i18nService.getMessage("notification.newComment.title", locale, article.getTitle());
+		String content = i18nService.getMessage("notification.newComment.content", locale, article.getTitle(), fullLink, commentContent);
+		notificationService.sendNotification(title, content);
 	}
 }
