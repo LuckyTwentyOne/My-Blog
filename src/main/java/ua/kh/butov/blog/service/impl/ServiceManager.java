@@ -9,7 +9,9 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ua.kh.butov.blog.service.AvatarService;
 import ua.kh.butov.blog.service.BusinessService;
+import ua.kh.butov.blog.service.SocialService;
 import ua.kh.butov.blog.util.AppUtil;
 
 public class ServiceManager {
@@ -43,11 +45,15 @@ public class ServiceManager {
 	final Properties applicationProperties = new Properties();
 	final ServletContext applicationContext;
 	final BasicDataSource dataSource;
+	final SocialService socialService;
+	final AvatarService avatarService;
 	final BusinessService businessService;
 	private ServiceManager(ServletContext context) {
 		applicationContext = context;
 		AppUtil.loadProperties(applicationProperties, "application.properties");
 		dataSource = createBasicDataSource();
+		socialService = new GooglePlusSocialService(this);
+		avatarService = new FileStorageAvatarService(this);
 		businessService = new BusinessServiceImpl(this);
 		LOGGER.info("ServiceManager instance created");
 	}
