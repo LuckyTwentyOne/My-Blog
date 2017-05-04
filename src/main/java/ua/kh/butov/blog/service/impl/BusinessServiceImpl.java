@@ -21,6 +21,7 @@ import ua.kh.butov.blog.exception.ApplicationException;
 import ua.kh.butov.blog.exception.RedirectToValidUrlException;
 import ua.kh.butov.blog.exception.ValidateException;
 import ua.kh.butov.blog.form.CommentForm;
+import ua.kh.butov.blog.form.ContactForm;
 import ua.kh.butov.blog.model.Items;
 import ua.kh.butov.blog.model.SocialAccount;
 import ua.kh.butov.blog.service.AvatarService;
@@ -164,6 +165,14 @@ public class BusinessServiceImpl implements BusinessService {
 		String fullLink = appHost + article.getArticleLink();
 		String title = i18nService.getMessage("notification.newComment.title", locale, article.getTitle());
 		String content = i18nService.getMessage("notification.newComment.content", locale, article.getTitle(), fullLink, commentContent);
+		notificationService.sendNotification(title, content);
+	}
+	
+	@Override
+	public void createContactRequest(ContactForm form) throws ValidateException {
+		form.validate(i18nService);
+		String title = i18nService.getMessage("notification.contact.title", form.getLocale());
+		String content = i18nService.getMessage("notification.contact.content", form.getLocale(), form.getName(), form.getEmail(), form.getText());
 		notificationService.sendNotification(title, content);
 	}
 }
