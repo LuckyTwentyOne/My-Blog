@@ -37,6 +37,9 @@ public class ServiceManager {
 	public BusinessService getBusinessService() {
 		return businessService;
 	}
+	public I18nService getI18nService() {
+		return i18nService;
+	}
 	
 	public String getApplicationProperty(String property) {
 		String value = applicationProperties.getProperty(property);
