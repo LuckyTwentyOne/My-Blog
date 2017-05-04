@@ -3,6 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="https://apis.google.com/js/platform.js" async defer></script>
+<!-- Go to www.addthis.com/dashboard to customize your tools -->
+<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-590b551bda1dbcbc"></script> 
 
 <div class="article thumbnail">
 	<c:set var="category" value="${CATEGORY_MAP[article.idCategory] }" />
@@ -20,12 +22,8 @@
 		<div class="content">${article.content }</div>
 		<%-- ----------------------------------------- Social buttons ----------------------------------------- --%>
 		<div class="row columns social">
-			<img src="http://placehold.it/32x32?text=f" alt="social" /> 
-			<img src="http://placehold.it/32x32?text=t" alt="social" /> 
-			<img src="http://placehold.it/32x32?text=g" alt="social" /> 
-			<img src="http://placehold.it/32x32?text=f" alt="social" /> 
-			<img src="http://placehold.it/32x32?text=t" alt="social" /> 
-			<img src="http://placehold.it/32x32?text=g" alt="social" />
+			<!-- Go to www.addthis.com/dashboard to customize your tools -->
+			<div class="addthis_inline_share_toolbox"></div>
 		</div>
 		<br>
 		<%-- ----------------------------------------- Comments section ----------------------------------------- --%>
