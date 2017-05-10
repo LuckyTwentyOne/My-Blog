@@ -24,7 +24,7 @@ public class NewsController extends AbstractController {
 		String requestUrl = req.getRequestURI();
 		Items<Article> items = listArticles(requestUrl, offset, req);
 		if (items == null) {
-			resp.sendRedirect("/404?url=" + requestUrl);
+			resp.sendRedirect("/MyBlog/404?url=" + requestUrl);
 		} else {
 			req.setAttribute("list", items.getItems());
 			Pagination pagination = new Pagination.Builder(requestUrl + "?", offset, items.getCount())
@@ -36,11 +36,11 @@ public class NewsController extends AbstractController {
 
 	private Items<Article> listArticles(String requestUrl, int offset, HttpServletRequest req) {
 		Items<Article> items;
-		if (requestUrl.endsWith("/MyBlog//news") || requestUrl.endsWith("/MyBlog//news/")) {
+		if (requestUrl.endsWith("/MyBlog/news") || requestUrl.endsWith("/MyBlog/news/")) {
 			items = getBusinessService().listArticles(offset, Constants.LIMIT_ARTICLES_PER_PAGE);
 			req.setAttribute("isNewsPage", Boolean.TRUE);
 		} else {
-			String categoryUrl = requestUrl.replace("/MyBlog//news", "");
+			String categoryUrl = requestUrl.replace("/MyBlog/news", "");
 			Category category = getBusinessService().findCategoryByUrl(categoryUrl);
 			if (category == null) {
 				return null;
