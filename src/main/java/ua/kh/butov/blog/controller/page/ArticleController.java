@@ -24,21 +24,27 @@ public class ArticleController extends AbstractController {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String requestUrl = req.getRequestURI();
 		try {
-			String id = StringUtils.split(requestUrl, "/")[2];
-			Article article = getBusinessService().viewArticle(Long.parseLong(id), requestUrl);
-			if (article == null) {
-				resp.sendRedirect("/MyBlog/404?url="+requestUrl);
-			}
-			else{
-				req.setAttribute("article", article);
-				List<Comment> comments = getBusinessService().listComments(article.getId(), 0, Constants.LIMIT_COMMENTS_PER_PAGE);
-				req.setAttribute("comments", comments);
-				forwardToPage("article.jsp", req, resp);
-			}
+			viewArticle(requestUrl, req, resp);
 		} catch (RedirectToValidUrlException e) {
 			resp.sendRedirect(e.getUrl());
 		} catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
-			resp.sendRedirect("/404?url="+requestUrl);
+			resp.sendRedirect("/404?url=" + requestUrl);
+		}
+	}
+
+	private void viewArticle(String requestUrl, HttpServletRequest req, HttpServletResponse resp)
+			throws NumberFormatException, ArrayIndexOutOfBoundsException, RedirectToValidUrlException, IOException,
+			ServletException {
+		String id = StringUtils.split(requestUrl, "/")[2];
+		Article article = getBusinessService().viewArticle(Long.parseLong(id), requestUrl);
+		if (article == null) {
+			resp.sendRedirect("/MyBlog/404?url=" + requestUrl);
+		} else {
+			req.setAttribute("article", article);
+			List<Comment> comments = getBusinessService().listComments(article.getId(), 0,
+					Constants.LIMIT_COMMENTS_PER_PAGE);
+			req.setAttribute("comments", comments);
+			forwardToPage("article.jsp", req, resp);
 		}
 	}
 }

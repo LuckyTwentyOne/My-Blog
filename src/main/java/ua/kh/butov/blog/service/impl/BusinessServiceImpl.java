@@ -110,8 +110,7 @@ public class BusinessServiceImpl implements BusinessService {
 			Article article = sql.findArticleById(c, idArticle);
 			if (article == null) {
 				return null;
-			}
-			if (!article.getArticleLink().equals(requestUrl)) {
+			} else if (!article.getArticleLink().equals(requestUrl)) {
 				throw new RedirectToValidUrlException(article.getArticleLink());
 			} else {
 				article.setViews(article.getViews() + 1);
@@ -160,19 +159,21 @@ public class BusinessServiceImpl implements BusinessService {
 			throw new ApplicationException("Can't create new comment: " + e.getMessage(), e);
 		}
 	}
-	
+
 	private void sendNewCommentNotification(Article article, String commentContent, Locale locale) {
 		String fullLink = appHost + article.getArticleLink();
 		String title = i18nService.getMessage("notification.newComment.title", locale, article.getTitle());
-		String content = i18nService.getMessage("notification.newComment.content", locale, article.getTitle(), fullLink, commentContent);
+		String content = i18nService.getMessage("notification.newComment.content", locale, article.getTitle(), fullLink,
+				commentContent);
 		notificationService.sendNotification(title, content);
 	}
-	
+
 	@Override
 	public void createContactRequest(ContactForm form) throws ValidateException {
 		form.validate(i18nService);
 		String title = i18nService.getMessage("notification.contact.title", form.getLocale());
-		String content = i18nService.getMessage("notification.contact.content", form.getLocale(), form.getName(), form.getEmail(), form.getText());
+		String content = i18nService.getMessage("notification.contact.content", form.getLocale(), form.getName(),
+				form.getEmail(), form.getText());
 		notificationService.sendNotification(title, content);
 	}
 }

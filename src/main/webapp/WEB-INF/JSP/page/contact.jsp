@@ -5,7 +5,7 @@
 	<h3 class="text-center">Contact form</h3>
 	<hr />
 	<form action="/MyBlog/contact" method="post" data-abide novalidate class="contact-form">
-		<c:if test="${success }">
+		<c:if test="${displayInfoMessage }">
 		<div class="small-12 medium-8 columns small-centered" style="padding:0 5px;">
 			<div class="success callout">
 	        	<p><i class="fi-info success"></i> Your request sent! Thank you for your message</p>

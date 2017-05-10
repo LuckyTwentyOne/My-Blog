@@ -12,6 +12,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ua.kh.butov.blog.exception.ApplicationException;
 import ua.kh.butov.blog.form.AbstractForm;
 import ua.kh.butov.blog.service.BusinessService;
 import ua.kh.butov.blog.service.impl.ServiceManager;
@@ -58,7 +59,7 @@ public abstract class AbstractController extends HttpServlet {
 			BeanUtils.populate(form, req.getParameterMap());
 			return form;
 		} catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-			throw new ServletException(e);
+			throw new ApplicationException("Can't create form "+formClass+" for request: "+e.getMessage(), e);
 		}
 	}
 
